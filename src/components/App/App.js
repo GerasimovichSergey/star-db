@@ -8,11 +8,11 @@ import './App.css';
 
 const App = () => {
     return (
-        <div>
+        <div className="container">
             <Header />
             <RandomPlanet />
-            <div className="row mb2">
-                <div className="col-md-6">
+            <div className="row">
+                <div className="col-md-6 mb-4">
                     <ItemList />
                 </div>
                 <div className="col-md-6">
@@ -22,5 +22,6 @@ const App = () => {
         </div>
     );
 }
+
 
 export default App;

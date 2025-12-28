@@ -14,30 +14,76 @@ export default class ApiService {
     async getAllPeople() {
         const response = await this.getData(`/people/`);
         
-        return response.results;
+        return response.results.map((person) => this._transformPerson(person));
     }
     
-    getPerson(id) {
-        return this.getData(`/people/${id}/`);
+    async getPerson(id) {
+        const person = await this.getData(`/people/${id}/`);
+        
+        return this._transformPerson(person);
     }
     
     async getAllPlanets() {
         const response = await this.getData(`/planets/`);
         
-        return response.results;
+        return response.results.map(planet => this._transformPlanet(planet));
     }
     
-    getPlanet(id) {
-        return this.getData(`/planets/${id}/`);
+    async getPlanet(id) {
+        const planet = await this.getData(`/planets/${id}/`);
+        
+        return this._transformPlanet(planet);
     }
     
     async getAllStarships() {
         const response = await this.getData(`/starships/`);
         
-        return response.results;
+        return response.results.map((starship) => this._transformStarship(starship));
     }
     
-    getStarship(id) {
-        return this.getData(`/starships/${id}/`);
+    async getStarship(id) {
+        const starship = await this.getData(`/starships/${id}/`);
+        
+        return this._transformStarship(starship);
+    }
+    
+    _extractId(item) {
+        const idRegExp = /\/([0-9]*)\/$/;
+        
+        return item.url.match(idRegExp)[1];
+    }
+    
+    _transformPlanet(planet) {
+        return {
+            id: this._extractId(planet),
+            name: planet.name,
+            population: planet.population,
+            rotationPeriod: planet.rotation_period,
+            diameter: planet.diameter,
+        }
+    }
+    
+    _transformStarship(starship) {
+        return {
+            id: this._extractId(starship),
+            name: starship.name,
+            model: starship.model,
+            manufacturer: starship.manufacturer,
+            costInCredits: starship.costInCredits,
+            length: starship.length,
+            crew: starship.crew,
+            passengers: starship.passengers,
+            cargoCapacity: starship.cargoCapacity,
+        }
+    }
+    
+    _transformPerson(person) {
+        return {
+            id: this._extractId(person),
+            name: person.name,
+            gender: person.gender,
+            birthYear: person.birthYear,
+            eyeColor: person.eyeColor,
+        }
     }
 }
