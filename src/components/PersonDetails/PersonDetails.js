@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './PersonDetails.css';
 import ApiService from '../../services/api-service';
 import Spinner from '../Spinner';
+import ErrorButton from '../ErrorButton/ErrorButton';
 
 
 export default class PersonDetails extends Component {
@@ -79,6 +80,7 @@ export default class PersonDetails extends Component {
                             <span>{eyeColor}</span>
                         </li>
                     </ul>
+                    <ErrorButton />
                 </div>
             </div>
         );
