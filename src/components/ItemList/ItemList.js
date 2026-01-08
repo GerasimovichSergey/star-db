@@ -1,48 +1,48 @@
 import React, { Component } from 'react';
 import './ItemList.css';
-import ApiService from '../../services/api-service';
 import Spinner from '../Spinner';
 
 
 export default class ItemList extends Component {
-    apiService = new ApiService();
-    
     state = {
-        peopleList: null,
+        itemList: null,
     }
     
     componentDidMount() {
-        this.apiService.getAllPeople()
-            .then((peopleList) => {
+        const { getData } = this.props;
+        
+        getData()
+            .then((itemList) => {
                 this.setState({
-                    peopleList: peopleList,
+                    itemList: itemList,
                 })
             })
-        
     }
     
     renderItems(arr) {
-        return arr.map((person) => {
+        return arr.map((item) => {
+            const label = this.props.renderItem(item);
+            
             return (
-                <li key={person.id} className="list-group-item" onClick={() => this.props.onItemSelected(person.id)}>
-                    {person.name}
+                <li key={item.id} className="list-group-item" onClick={() => this.props.onItemSelected(item.id)}>
+                    {label}
                 </li>
             );
         });
     }
     
     render() {
-        const { peopleList } = this.state;
+        const { itemList } = this.state;
         
-        if (!peopleList) {
+        if (!itemList) {
             return <Spinner />
         }
         
-        const people = this.renderItems(peopleList);
+        const items = this.renderItems(itemList);
         
         return (
             <ul className="item-list list-group">
-                {people}
+                {items}
             </ul>
         );
     }

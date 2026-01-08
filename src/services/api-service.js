@@ -1,7 +1,7 @@
 export default class ApiService {
     _apiBase = 'https://swapi.dev/api';
     
-    async getData(url) {
+    getData = async (url) => {
         const response = await fetch(`${this._apiBase}${url}`);
         
         if (!response.ok) {
@@ -9,45 +9,45 @@ export default class ApiService {
         }
         
         return response.json();
-    }
+    };
     
-    async getAllPeople() {
+    getAllPeople = async () => {
         const response = await this.getData(`/people/`);
         
         return response.results.map((person) => this._transformPerson(person));
-    }
+    };
     
-    async getPerson(id) {
+    getPerson = async (id) => {
         const person = await this.getData(`/people/${id}/`);
         
         return this._transformPerson(person);
-    }
+    };
     
-    async getAllPlanets() {
+    getAllPlanets = async () => {
         const response = await this.getData(`/planets/`);
         
         return response.results.map(planet => this._transformPlanet(planet));
-    }
+    };
     
-    async getPlanet(id) {
+    getPlanet = async (id) => {
         const planet = await this.getData(`/planets/${id}/`);
         
         return this._transformPlanet(planet);
-    }
+    };
     
-    async getAllStarships() {
+    getAllStarships = async () => {
         const response = await this.getData(`/starships/`);
         
         return response.results.map((starship) => this._transformStarship(starship));
-    }
+    };
     
-    async getStarship(id) {
+    getStarship = async (id) => {
         const starship = await this.getData(`/starships/${id}/`);
         
         return this._transformStarship(starship);
-    }
+    };
     
-    _extractId(item) {
+    _extractId = (item) => {
         const idRegExp = /\/([0-9]*)\/$/;
         
         return item.url.match(idRegExp)[1];
@@ -82,7 +82,7 @@ export default class ApiService {
             id: this._extractId(person),
             name: person.name,
             gender: person.gender,
-            birthYear: person.birthYear,
+            birthYear: person.birth_year,
             eyeColor: person.eyeColor,
         }
     }

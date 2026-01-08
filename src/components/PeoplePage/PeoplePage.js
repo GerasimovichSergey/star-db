@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import ItemList from '../ItemList';
 import PersonDetails from '../PersonDetails';
 import ErrorIndicator from '../ErrorIndicator';
+import ApiService from '../../services/api-service';
+import Row from '../Row';
 
 
-export default class    PeoplePage extends Component {
+export default class PeoplePage extends Component {
+    apiService = new ApiService();
+    
     state = {
         selectedPerson: null,
         hasError: false,
@@ -27,15 +31,20 @@ export default class    PeoplePage extends Component {
             return <ErrorIndicator />;
         }
         
+        const itemList = (
+            <ItemList
+                onItemSelected={this.onPersonSelected}
+                getData={this.apiService.getAllPeople}
+                renderItem={(item) => `${item.name} (${item.gender}, ${item.birthYear})`}
+            />
+        );
+        
+        const personDetails = (
+            <PersonDetails personId={this.state.selectedPerson} />
+        );
+        
         return (
-            <div className="row">
-                <div className="col-md-6 mb-4">
-                    <ItemList onItemSelected={this.onPersonSelected} />
-                </div>
-                <div className="col-md-6">
-                    <PersonDetails personId={this.state.selectedPerson} />
-                </div>
-            </div>
+            <Row left={itemList} right={personDetails} />
         );
     }
 }
