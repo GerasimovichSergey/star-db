@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import ItemList from '../ItemList';
-import PersonDetails from '../PersonDetails';
+import ItemDetails from '../ItemDetails';
 import ErrorIndicator from '../ErrorIndicator';
 import ApiService from '../../services/api-service';
 import Row from '../Row';
+import './PeoplePage.css';
+import ErrorBoundary from '../ErrorBoundary';
 
 
 export default class PeoplePage extends Component {
@@ -11,13 +13,6 @@ export default class PeoplePage extends Component {
     
     state = {
         selectedPerson: null,
-        hasError: false,
-    }
-    
-    componentDidCatch() {
-        this.setState({
-            hasError: true,
-        });
     }
     
     onPersonSelected = (id) => {
@@ -35,12 +30,15 @@ export default class PeoplePage extends Component {
             <ItemList
                 onItemSelected={this.onPersonSelected}
                 getData={this.apiService.getAllPeople}
-                renderItem={(item) => `${item.name} (${item.gender}, ${item.birthYear})`}
-            />
+            >
+                {(item) => `${item.name} (${item.gender})`}
+            </ItemList>
         );
         
         const personDetails = (
-            <PersonDetails personId={this.state.selectedPerson} />
+            <ErrorBoundary>
+                <ItemDetails itemId={this.state.selectedPerson} />
+            </ErrorBoundary>
         );
         
         return (

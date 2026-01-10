@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import RandomPlanet from '../RandomPlanet';
 import './App.css';
-import PeoplePage from '../PeoplePage/PeoplePage';
-import ErrorButton from '../ErrorButton/ErrorButton';
+import PeoplePage from '../PeoplePage';
+import ErrorButton from '../ErrorButton';
 import ErrorIndicator from '../ErrorIndicator';
-import ItemList from '../ItemList';
-import PersonDetails from '../PersonDetails';
-import ApiService from '../../services/api-service';
 
 
 export default class App extends Component {
-    apiService = new ApiService();
-    
     state = {
         showRandomPlanet: true,
         hasError: false,
@@ -54,19 +49,6 @@ export default class App extends Component {
                 </div>
                 
                 <PeoplePage />
-                
-                <div className="row">
-                    <div className="col-md-6 mb-4">
-                        <ItemList
-                            onItemSelected={this.onPersonSelected}
-                            getData={this.apiService.getAllPlanets}
-                            renderItem={(item) => item.name}
-                        />
-                    </div>
-                    <div className="col-md-6">
-                        <PersonDetails personId={this.state.selectedPerson} />
-                    </div>
-                </div>
             </div>
         );
     }

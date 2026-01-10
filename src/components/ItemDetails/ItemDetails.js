@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import './PersonDetails.css';
+import './ItemDetails.css';
 import ApiService from '../../services/api-service';
 import Spinner from '../Spinner';
 import ErrorButton from '../ErrorButton/ErrorButton';
 
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
     apiService = new ApiService();
     
     state = {
-        person: null,
+        item: null,
         loading: false,
     }
     
@@ -18,32 +18,32 @@ export default class PersonDetails extends Component {
     }
     
     componentDidUpdate(prevProps) {
-        if (this.props.personId !== prevProps.personId) {
+        if (this.props.itemId !== prevProps.itemId) {
             this.setState({ loading: true });
             this.updatePerson();
         }
     }
     
     updatePerson() {
-        const { personId } = this.props;
+        const { itemId } = this.props;
         
-        if (!personId) {
+        if (!itemId) {
             return;
         }
         
-        this.apiService.getPerson(personId)
-            .then((person) => {
+        this.apiService.getPerson(itemId)
+            .then((item) => {
                 this.setState({
-                    person: person,
+                    item: item,
                     loading: false,
                 })
             })
     }
     
     render() {
-        const { person, loading } = this.state;
+        const { item, loading } = this.state;
         
-        if (!person && !loading) {
+        if (!item && !loading) {
             return (
                 <div className="person-details card">
                     <span>Select a person from a list</span>
@@ -58,7 +58,7 @@ export default class PersonDetails extends Component {
                 </div>
             );
         }
-        const { id, name, gender, birthYear, eyeColor } = this.state.person;
+        const { id, name, gender, birthYear, eyeColor } = this.state.item;
         
         return (
             <div className="person-details card">
