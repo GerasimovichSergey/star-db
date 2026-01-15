@@ -7,6 +7,7 @@ import ItemDetails from '../ItemDetails';
 import ApiService from '../../services/api-service';
 import { Record } from '../ItemDetails/ItemDetails';
 import { PersonDetails, PersonList, PlanetDetails, PlanetList, StarshipDetails, StarshipList } from '../SwComponents';
+import { Provider } from '../apiServiceContext';
 
 
 export default class App extends Component {
@@ -61,23 +62,19 @@ export default class App extends Component {
         }
         
         return (
-            <div className="container">
-                <Header />
-                
-                <PersonDetails itemId={11} />
-                <PlanetDetails itemId={5} />
-                <StarshipDetails itemId={9} />
-                
-                <PersonList>
-                    {({ name }) => <span>{name}</span>}
-                </PersonList>
-                <StarshipList>
-                    {({ name }) => <span>{name}</span>}
-                </StarshipList>
-                <PlanetList>
-                    {({ name }) => <span>{name}</span>}
-                </PlanetList>
-            </div>
+            <Provider value={this.apiService}>
+                <div className="container">
+                    <Header />
+                    
+                    <PersonDetails itemId={11} />
+                    <PlanetDetails itemId={5} />
+                    <StarshipDetails itemId={9} />
+                    
+                    <PersonList />
+                    <StarshipList />
+                    <PlanetList />
+                </div>
+            </Provider>
         );
     }
 }
