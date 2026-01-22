@@ -1,3 +1,5 @@
 import WithData from './WithData';
+import withApiService from './with-api-service';
 
-export default WithData;
+
+export { WithData, withApiService };

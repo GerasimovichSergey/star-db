@@ -1,11 +1,7 @@
 import React from 'react';
 import ItemList from '../ItemList';
-import withData from '../hoc-helpers/WithData';
-import ApiService from '../../services/api-service';
+import { WithData, withApiService } from '../hoc-helpers';
 
-
-const apiService = new ApiService();
-const { getAllPeople, getAllStarships, getAllPlanets } = apiService;
 
 const withChildFunction = (Wrapped, fn) => {
     return (props) => {
@@ -19,6 +15,24 @@ const withChildFunction = (Wrapped, fn) => {
 const renderName = ({ name }) => <span>{name}</span>;
 const renderModelAndName = ({ model, name }) => <span>{name} ({model})</span>;
 
-export const PersonList = withData(withChildFunction(ItemList, renderName), getAllPeople);
-export const PlanetList = withData(withChildFunction(ItemList, renderName), getAllPlanets);
-export const StarshipList = withData(withChildFunction(ItemList, renderModelAndName), getAllStarships);
+const mapPersonMethodToProps = (apiService) => {
+    return {
+        getData: apiService.getAllPeople,
+    }
+};
+
+const mapPlanetMethodToProps = (apiService) => {
+    return {
+        getData: apiService.getAllPlanets,
+    }
+};
+
+const mapStarshipMethodToProps = (apiService) => {
+    return {
+        getData: apiService.getAllStarships,
+    }
+};
+
+export const PersonList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPersonMethodToProps);
+export const PlanetList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPlanetMethodToProps);
+export const StarshipList = withApiService(WithData(withChildFunction(ItemList, renderModelAndName)), mapStarshipMethodToProps);

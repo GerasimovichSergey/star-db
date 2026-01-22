@@ -5,18 +5,30 @@ import './App.css';
 import ErrorIndicator from '../ErrorIndicator';
 import ItemDetails from '../ItemDetails';
 import ApiService from '../../services/api-service';
+import DummyApiService from '../../services/dummy-api-service';
 import { Record } from '../ItemDetails/ItemDetails';
 import { PersonDetails, PersonList, PlanetDetails, PlanetList, StarshipDetails, StarshipList } from '../SwComponents';
 import { Provider } from '../apiServiceContext';
 
 
 export default class App extends Component {
-    apiService = new ApiService();
-    
     state = {
         showRandomPlanet: true,
         hasError: false,
+        apiService: new ApiService(),
     }
+    
+    onServiceChange = () => {
+        this.setState((prevState) => {
+            const { apiService } = prevState;
+            
+            const Service = apiService instanceof ApiService ? DummyApiService : ApiService;
+            
+            return {
+                apiService: new Service(),
+            }
+        });
+    };
     
     toggleRandomPlanet = () => {
         this.setState((prevState) => {
@@ -38,9 +50,7 @@ export default class App extends Component {
             getStarship,
             getPersonImage,
             getStarshipImage,
-            getAllPeople,
-            getAllPlanets
-        } = this.apiService;
+        } = this.state.apiService;
         
         const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
         const personDetails =
@@ -62,9 +72,9 @@ export default class App extends Component {
         }
         
         return (
-            <Provider value={this.apiService}>
+            <Provider value={this.state.apiService}>
                 <div className="container">
-                    <Header />
+                    <Header onServiceChange={this.onServiceChange} />
                     
                     <PersonDetails itemId={11} />
                     <PlanetDetails itemId={5} />
