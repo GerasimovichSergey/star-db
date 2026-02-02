@@ -1,7 +1,7 @@
-import PersonDetails  from './PersonDetails';
-import PlanetDetails  from './PlanetDetails';
+import PersonDetails from './PersonDetails';
+import PlanetDetails from './PlanetDetails';
 import StarshipDetails from './StarshipDetails';
-import { PersonList, PlanetList, StarshipList } from './ItemList';
+import { PersonsList, PlanetsList, StarshipsList } from './ItemList';
 
 
-export { PersonDetails, PlanetDetails, StarshipDetails, PersonList, PlanetList, StarshipList };
+export { PersonDetails, PlanetDetails, StarshipDetails, PersonsList, PlanetsList, StarshipsList };

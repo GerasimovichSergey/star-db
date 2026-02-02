@@ -33,6 +33,6 @@ const mapStarshipMethodToProps = (apiService) => {
     }
 };
 
-export const PersonList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPersonMethodToProps);
-export const PlanetList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPlanetMethodToProps);
-export const StarshipList = withApiService(WithData(withChildFunction(ItemList, renderModelAndName)), mapStarshipMethodToProps);
+export const PersonsList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPersonMethodToProps);
+export const PlanetsList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPlanetMethodToProps);
+export const StarshipsList = withApiService(WithData(withChildFunction(ItemList, renderModelAndName)), mapStarshipMethodToProps);
