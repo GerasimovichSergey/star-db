@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Row.css';
 
 
@@ -15,6 +16,11 @@ const Row = (props) => {
             </div>
         </div>
     );
+};
+
+Row.propTypes = {
+    left: PropTypes.node,
+    right: PropTypes.node,
 };
 
 

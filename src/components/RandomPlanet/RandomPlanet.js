@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ApiService from '../../services/api-service';
 import './RandomPlanet.css';
 import Spinner from '../Spinner';
@@ -15,8 +16,9 @@ export default class RandomPlanet extends Component {
     }
     
     componentDidMount() {
+        const { updateInterval } = this.props;
         this.updatePlanet();
-        this.interval = setInterval(this.updatePlanet, 5500);
+        this.interval = setInterval(this.updatePlanet, updateInterval);
     }
     
     componentWillUnmount() {
@@ -60,6 +62,14 @@ export default class RandomPlanet extends Component {
             </div>
         );
     }
+}
+
+RandomPlanet.defaultProps = {
+    updateInterval: 10000,
+}
+
+RandomPlanet.propTypes = {
+    updateInterval: PropTypes.number,
 }
 
 const PlanetView = (props) => {

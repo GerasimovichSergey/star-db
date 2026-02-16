@@ -1,16 +1,7 @@
 import React from 'react';
 import ItemList from '../ItemList';
-import { WithData, withApiService } from '../hoc-helpers';
+import { WithData, withApiService, compose, withChildFunction } from '../hoc-helpers';
 
-
-const withChildFunction = (Wrapped, fn) => {
-    return (props) => {
-        return (
-            <Wrapped {...props}>
-                {fn}
-            </Wrapped>)
-    };
-};
 
 const renderName = ({ name }) => <span>{name}</span>;
 const renderModelAndName = ({ model, name }) => <span>{name} ({model})</span>;
@@ -33,6 +24,20 @@ const mapStarshipMethodToProps = (apiService) => {
     }
 };
 
-export const PersonsList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPersonMethodToProps);
-export const PlanetsList = withApiService(WithData(withChildFunction(ItemList, renderName)), mapPlanetMethodToProps);
-export const StarshipsList = withApiService(WithData(withChildFunction(ItemList, renderModelAndName)), mapStarshipMethodToProps);
+export const PersonsList = compose(
+    withApiService(mapPersonMethodToProps),
+    WithData,
+    withChildFunction(renderName)
+)(ItemList);
+
+export const PlanetsList = compose(
+    withApiService(mapPlanetMethodToProps),
+    WithData,
+    withChildFunction(renderName)
+)(ItemList);
+
+export const StarshipsList = compose(
+    withApiService(mapStarshipMethodToProps),
+    WithData,
+    withChildFunction(renderModelAndName)
+)(ItemList);
