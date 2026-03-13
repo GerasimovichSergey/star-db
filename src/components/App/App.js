@@ -7,6 +7,7 @@ import ApiService from '../../services/api-service';
 import DummyApiService from '../../services/dummy-api-service';
 import { Provider } from '../apiServiceContext';
 import { PeoplePage, PlanetsPage, StarshipsPage } from '../Pages';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 
 export default class App extends Component {
@@ -40,14 +41,16 @@ export default class App extends Component {
         
         return (
             <Provider value={this.state.apiService}>
-                <div className="container">
-                    <Header onServiceChange={this.onServiceChange} />
-                    
-                    <RandomPlanet />
-                    <PeoplePage />
-                    <PlanetsPage />
-                    <StarshipsPage />
-                </div>
+                <BrowserRouter>
+                    <div className="container">
+                        <Header onServiceChange={this.onServiceChange} />
+                        <RandomPlanet />
+                        
+                        <Route path="/people" component={PeoplePage} />
+                        <Route path="/planets" component={PlanetsPage} />
+                        <Route path="/starships" component={StarshipsPage} />
+                    </div>
+                </BrowserRouter>
             </Provider>
         );
     }

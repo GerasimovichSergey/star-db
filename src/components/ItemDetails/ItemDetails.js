@@ -56,15 +56,15 @@ export default class ItemDetails extends Component {
         
         if (!item && !loading) {
             return (
-                <div className="person-details card">
-                    <span>Select a person from a list</span>
+                <div className="item-details card">
+                    <span>Select a item from a list</span>
                 </div>
             );
         }
         
         if (loading) {
             return (
-                <div className="person-details card">
+                <div className="item-details card">
                     <Spinner />
                 </div>
             );
