@@ -8,6 +8,7 @@ import DummyApiService from '../../services/dummy-api-service';
 import { Provider } from '../apiServiceContext';
 import { PeoplePage, PlanetsPage, StarshipsPage } from '../Pages';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { StarshipDetails } from '../SwComponents';
 
 
 export default class App extends Component {
@@ -46,9 +47,15 @@ export default class App extends Component {
                         <Header onServiceChange={this.onServiceChange} />
                         <RandomPlanet />
                         
-                        <Route path="/people" component={PeoplePage} />
+                        <Route path="/" render={() => <h2>Welcome to StarDB</h2>} exact={true} />
+                        <Route path="/people/:id?" component={PeoplePage} />
                         <Route path="/planets" component={PlanetsPage} />
-                        <Route path="/starships" component={StarshipsPage} />
+                        <Route path="/starships" component={StarshipsPage} exact={true} />
+                        <Route path="/starships/:id" render={({ match }) => {
+                            const id = match.params.id;
+                            
+                            return <StarshipDetails itemId={id} />;
+                        }} />
                     </div>
                 </BrowserRouter>
             </Provider>
