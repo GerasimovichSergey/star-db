@@ -6,7 +6,7 @@ import ErrorIndicator from '../ErrorIndicator';
 import ApiService from '../../services/api-service';
 import DummyApiService from '../../services/dummy-api-service';
 import { Provider } from '../apiServiceContext';
-import { PeoplePage, PlanetsPage, StarshipsPage } from '../Pages';
+import { LoginPage, PeoplePage, PlanetsPage, SecretPage, StarshipsPage } from '../Pages';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { StarshipDetails } from '../SwComponents';
 
@@ -15,6 +15,13 @@ export default class App extends Component {
     state = {
         hasError: false,
         apiService: new ApiService(),
+        isLoggedIn: false,
+    }
+    
+    onLogin = () => {
+        this.setState({
+            isLoggedIn: true,
+        })
     }
     
     onServiceChange = () => {
@@ -56,6 +63,10 @@ export default class App extends Component {
                             
                             return <StarshipDetails itemId={id} />;
                         }} />
+                        <Route path="/login"
+                               render={() => <LoginPage isLoggedIn={this.state.isLoggedIn} onLogin={this.onLogin} />} />
+                        <Route path="/secret"
+                               render={() => <SecretPage isLoggedIn={this.state.isLoggedIn} />} />
                     </div>
                 </BrowserRouter>
             </Provider>
